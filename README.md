@@ -3,19 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mika Solari — Interaction & 3D Design</title>
+<title>Thunyakorn Piamanboontee — 3D Product Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0A0D12;
-    --bg-alt: #10141B;
-    --ink: #EDEAE2;
-    --ink-dim: #8D95A1;
-    --accent: #C89B4A;
-    --accent-dim: #6E5A30;
-    --line: #23282F;
+    --bg: #060605;
+    --bg-alt: #0E0D0A;
+    --tile: #0C0B08;
+    --ink: #F4F0E4;
+    --ink-dim: #948C7B;
+    --gold: #E8B84B;
+    --gold-dim: #7A6329;
+    --line: #201C13;
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -23,464 +24,506 @@
     background:var(--bg);
     color:var(--ink);
     font-family:'Inter', sans-serif;
-    font-weight:400;
     overflow-x:hidden;
   }
   h1,h2,h3,.display{
-    font-family:'Fraunces', serif;
-    font-weight:500;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
     letter-spacing:-0.01em;
-    line-height:1.05;
+    line-height:1;
   }
   a{ color:inherit; text-decoration:none; }
-  ::selection{ background:var(--accent); color:var(--bg); }
+  ::selection{ background:var(--gold); color:#000; }
 
   /* ---------- nav ---------- */
   nav{
-    position:fixed; top:0; left:0; right:0; z-index:50;
+    position:fixed; top:0; left:0; right:0; z-index:60;
     display:flex; justify-content:space-between; align-items:center;
-    padding:28px clamp(24px,5vw,64px);
+    padding:24px clamp(20px,4.5vw,56px);
     mix-blend-mode:difference;
   }
-  .nav-mark{ font-family:'Fraunces', serif; font-size:18px; font-style:italic; }
-  .nav-links{ display:flex; gap:36px; }
-  .nav-links a{
-    font-size:14px; color:var(--ink); opacity:.8;
-    transition:opacity .25s ease;
-  }
-  .nav-links a:hover{ opacity:1; }
+  .nav-mark{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .nav-mark span{ color:var(--gold); }
+  .nav-links{ display:flex; gap:32px; }
+  .nav-links a{ font-size:13px; color:var(--ink); opacity:.75; transition:opacity .25s ease; }
+  .nav-links a:hover{ opacity:1; color:var(--gold); }
 
   /* ---------- hero ---------- */
   .hero{
     position:relative;
     height:100svh;
-    display:flex;
-    align-items:flex-end;
     overflow:hidden;
+    border-bottom:1px solid var(--line);
   }
-  #hero-canvas{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    display:block;
+  #hero-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .hero-vignette{
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 55%, rgba(6,6,5,0) 0%, rgba(6,6,5,0.55) 60%, rgba(6,6,5,0.95) 100%),
+      linear-gradient(180deg, rgba(6,6,5,0.55) 0%, rgba(6,6,5,0.05) 22%, rgba(6,6,5,0.15) 70%, rgba(6,6,5,0.9) 100%);
   }
-  .hero-content{
-    position:relative;
+
+  .hero-top{
+    position:absolute; top:0; left:0; right:0; z-index:3;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:96px clamp(20px,4.5vw,56px) 0;
+    opacity:0; animation:fadeIn 1s ease .2s forwards;
+  }
+  .hero-id{ font-size:14px; color:var(--ink-dim); letter-spacing:.02em; }
+  .hero-id b{ color:var(--ink); font-weight:600; }
+  .hero-year{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(34px,5vw,58px);
+    font-weight:700;
+    color:transparent;
+    -webkit-text-stroke:1px var(--gold-dim);
+  }
+
+  .hero-title{
+    position:absolute; left:0; right:0; top:50%; transform:translateY(-46%);
     z-index:2;
-    padding:0 clamp(24px,5vw,64px) clamp(48px,8vh,96px);
-    max-width:820px;
-    opacity:0;
-    transform:translateY(24px);
-    animation:rise 1.1s cubic-bezier(.22,.68,.2,1) .3s forwards;
-  }
-  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
-  .hero-label{
-    font-size:13px; color:var(--accent); margin-bottom:18px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .hero-label::before{
-    content:''; width:26px; height:1px; background:var(--accent);
-  }
-  .hero h1{
-    font-size:clamp(48px, 8vw, 108px);
+    text-align:center;
+    font-size:clamp(72px, 15vw, 220px);
     color:var(--ink);
+    white-space:nowrap;
+    opacity:0; animation:fadeIn 1.1s ease .4s forwards;
   }
-  .hero h1 em{
-    font-style:italic; color:var(--accent-dim);
-    -webkit-text-stroke:1px var(--accent);
+  .hero-title .thin{
+    -webkit-text-stroke:1px var(--ink);
     color:transparent;
   }
-  .hero p{
-    margin-top:22px;
-    font-size:clamp(15px,1.6vw,18px);
-    color:var(--ink-dim);
-    max-width:44ch;
-    line-height:1.6;
-  }
-  .scroll-cue{
-    position:absolute; bottom:28px; right:clamp(24px,5vw,64px);
-    font-size:12px; color:var(--ink-dim); z-index:2;
-    writing-mode:vertical-rl;
-    display:flex; align-items:center; gap:10px;
-  }
-  .scroll-cue::after{
-    content:''; width:1px; height:44px; background:var(--line);
-  }
 
-  /* ---------- shared section styling ---------- */
-  section{
-    padding:clamp(96px,14vh,160px) clamp(24px,5vw,64px);
-    border-top:1px solid var(--line);
+  .hero-bottom{
+    position:absolute; bottom:0; left:0; right:0; z-index:3;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    padding:0 clamp(20px,4.5vw,56px) 44px;
+    opacity:0; animation:fadeIn 1s ease .6s forwards;
   }
-  .section-label{
-    font-size:13px; color:var(--accent);
-    margin-bottom:28px;
+  .hero-cta{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:14px; color:var(--ink);
+    padding:14px 22px;
+    border:1px solid rgba(244,240,228,0.2);
+    border-radius:100px;
+    backdrop-filter:blur(6px);
+    background:rgba(255,255,255,0.03);
+    transition:border-color .25s ease, background .25s ease;
   }
+  .hero-cta:hover{ border-color:var(--gold); background:rgba(232,184,75,0.08); }
+  .hero-cta svg{ width:14px; height:14px; transform:rotate(-45deg); }
+
+  .hero-replay{
+    width:46px; height:46px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(244,240,228,0.2);
+    background:rgba(255,255,255,0.03);
+    cursor:pointer;
+    transition:border-color .25s ease, transform .5s ease;
+  }
+  .hero-replay:hover{ border-color:var(--gold); }
+  .hero-replay.spin svg{ animation:spin .7s ease; }
+  .hero-replay svg{ width:18px; height:18px; stroke:var(--ink); }
+  @keyframes spin{ to{ transform:rotate(180deg); } }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
+  .hero-top.opacity-fix, .hero-bottom.opacity-fix{ transform:none; }
+
+  /* ---------- sections ---------- */
+  section{ padding:clamp(84px,12vh,140px) clamp(20px,4.5vw,56px); border-top:1px solid var(--line); }
+  .section-label{ font-size:13px; color:var(--gold); margin-bottom:24px; }
   .section-head{
     display:flex; justify-content:space-between; align-items:flex-end;
-    gap:32px; flex-wrap:wrap;
-    margin-bottom:64px;
+    gap:32px; flex-wrap:wrap; margin-bottom:52px;
   }
-  .section-head h2{
-    font-size:clamp(32px,4.2vw,52px);
-    max-width:14ch;
-  }
-  .section-head p{
-    color:var(--ink-dim);
-    max-width:36ch;
-    font-size:15px;
-    line-height:1.6;
-  }
+  .section-head h2{ font-size:clamp(28px,3.8vw,46px); max-width:16ch; }
+  .section-head p{ color:var(--ink-dim); max-width:38ch; font-size:14.5px; line-height:1.6; }
 
   /* ---------- about ---------- */
-  .about{
-    display:grid;
-    grid-template-columns:1.3fr .9fr;
-    gap:64px;
-    align-items:center;
-  }
-  .about-text p{
-    font-size:clamp(18px,2vw,24px);
-    line-height:1.55;
-    color:var(--ink);
-    font-family:'Fraunces', serif;
-    font-weight:300;
-    max-width:36ch;
-  }
-  .about-text p + p{ margin-top:22px; color:var(--ink-dim); font-size:15px; font-family:'Inter',sans-serif; max-width:42ch; }
-  .about-shape{
-    position:relative;
-    aspect-ratio:1/1;
-    max-width:360px;
-    justify-self:end;
-  }
+  .about{ display:grid; grid-template-columns:1.3fr .9fr; gap:60px; align-items:center; }
+  .about-text p{ font-size:clamp(17px,1.9vw,22px); line-height:1.55; color:var(--ink); max-width:38ch; }
+  .about-text p + p{ margin-top:20px; color:var(--ink-dim); font-size:14.5px; max-width:44ch; font-weight:400; }
+  .about-shape{ position:relative; aspect-ratio:1/1; max-width:320px; justify-self:end; }
   .about-shape canvas{ width:100%; height:100%; display:block; }
 
-  /* ---------- work ---------- */
-  .work-list{ display:flex; flex-direction:column; }
-  .work-row{
+  /* ---------- bento work grid ---------- */
+  .bento{
     display:grid;
-    grid-template-columns:120px 1fr auto;
-    align-items:center;
-    gap:36px;
-    padding:32px 0;
-    border-top:1px solid var(--line);
-    transition:background .3s ease;
+    grid-template-columns:repeat(6, 1fr);
+    grid-template-rows:repeat(4, 150px);
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
   }
-  .work-row:last-child{ border-bottom:1px solid var(--line); }
-  .work-row:hover{ background:rgba(200,155,74,0.04); }
-  .work-thumb{
-    width:120px; height:120px;
-    background:var(--bg-alt);
-    border-radius:4px;
+  .bento-item{
+    position:relative;
+    background:var(--tile);
     overflow:hidden;
   }
-  .work-thumb canvas{ width:100%; height:100%; display:block; }
-  .work-info h3{
-    font-size:clamp(22px,2.6vw,32px);
-    font-weight:500;
-    color:var(--ink);
+  .bento-item canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .b-gem{ grid-column:1 / 4; grid-row:1 / 3; }
+  .b-bottle{ grid-column:4 / 6; grid-row:1 / 3; }
+  .b-console{ grid-column:6 / 7; grid-row:1 / 3; }
+  .b-capsule{ grid-column:1 / 3; grid-row:3 / 5; }
+  .b-rover{ grid-column:3 / 5; grid-row:3 / 5; }
+  .b-gold{ grid-column:5 / 7; grid-row:3 / 5; }
+
+  .b-chip{
+    position:absolute; top:14px; left:14px; z-index:2;
+    font-size:10px; letter-spacing:.05em;
+    color:var(--ink-dim);
+    border:1px solid rgba(244,240,228,0.15);
+    padding:4px 9px; border-radius:100px;
+    background:rgba(6,6,5,0.5);
   }
-  .work-info p{
-    margin-top:8px; color:var(--ink-dim); font-size:14px; max-width:52ch;
+  .b-label{
+    position:absolute; left:16px; right:16px; bottom:14px; z-index:2;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:12px;
   }
-  .work-meta{
-    text-align:right; color:var(--ink-dim); font-size:13px;
-    display:flex; flex-direction:column; gap:6px;
+  .b-label h3{ font-size:16px; font-weight:600; color:var(--ink); }
+  .b-label span{ font-size:11px; color:var(--gold); white-space:nowrap; }
+  .bento-item::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(6,6,5,0) 45%, rgba(6,6,5,0.85) 100%);
+    pointer-events:none; z-index:1;
   }
-  .work-meta span:first-child{ color:var(--accent); }
 
   /* ---------- process ---------- */
-  .process{
-    display:grid;
-    grid-template-columns:.9fr 1.4fr;
-    gap:64px;
-  }
-  .process-list{
-    display:flex; flex-wrap:wrap; gap:14px 28px;
-  }
+  .process{ display:grid; grid-template-columns:.9fr 1.4fr; gap:60px; }
+  .process-list{ display:flex; flex-wrap:wrap; gap:12px 28px; }
   .process-list li{
-    list-style:none;
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:clamp(20px,2.6vw,30px);
-    color:var(--ink-dim);
-    transition:color .25s ease;
+    list-style:none; font-family:'Space Grotesk', sans-serif; font-weight:500;
+    font-size:clamp(18px,2.2vw,26px); color:var(--ink-dim); transition:color .25s ease;
   }
-  .process-list li:hover{ color:var(--accent); }
+  .process-list li:hover{ color:var(--gold); }
 
   /* ---------- contact ---------- */
-  .contact{
-    display:flex; flex-direction:column; align-items:flex-start; gap:28px;
-  }
-  .contact h2{
-    font-size:clamp(36px,6.4vw,88px);
-    max-width:14ch;
-  }
+  .contact{ display:flex; flex-direction:column; align-items:flex-start; gap:24px; }
+  .contact h2{ font-size:clamp(30px,5.2vw,70px); max-width:16ch; }
   .contact-link{
-    font-size:clamp(16px,1.8vw,20px);
-    color:var(--ink);
-    padding-bottom:6px;
-    border-bottom:1px solid var(--accent-dim);
-    transition:border-color .25s ease, color .25s ease;
+    font-size:clamp(15px,1.7vw,19px); color:var(--ink); padding-bottom:6px;
+    border-bottom:1px solid var(--gold-dim); transition:border-color .25s ease, color .25s ease;
   }
-  .contact-link:hover{ border-color:var(--accent); color:var(--accent); }
-  .contact-socials{
-    display:flex; gap:24px; margin-top:12px;
-    font-size:14px; color:var(--ink-dim);
-  }
+  .contact-link:hover{ border-color:var(--gold); color:var(--gold); }
+  .contact-socials{ display:flex; gap:22px; margin-top:6px; font-size:13.5px; color:var(--ink-dim); }
+  .contact-socials a:hover{ color:var(--gold); }
   footer{
-    padding:28px clamp(24px,5vw,64px);
-    display:flex; justify-content:space-between;
-    font-size:12px; color:var(--ink-dim);
-    border-top:1px solid var(--line);
+    padding:24px clamp(20px,4.5vw,56px); display:flex; justify-content:space-between;
+    font-size:12px; color:var(--ink-dim); border-top:1px solid var(--line);
   }
 
-  @media (max-width:820px){
+  @media (max-width:900px){
     .about, .process{ grid-template-columns:1fr; }
-    .about-shape{ justify-self:start; max-width:220px; }
-    .work-row{ grid-template-columns:72px 1fr; }
-    .work-meta{ display:none; }
-    .work-thumb{ width:72px; height:72px; }
+    .about-shape{ justify-self:start; max-width:200px; }
+    .bento{ grid-template-columns:1fr; grid-template-rows:none; }
+    .b-gem,.b-bottle,.b-console,.b-capsule,.b-rover,.b-gold{ grid-column:1; grid-row:auto; aspect-ratio:4/3; }
+    .hero-title{ font-size:clamp(48px, 17vw, 96px); }
+    .hero-top{ padding-top:80px; }
   }
 
   @media (prefers-reduced-motion: reduce){
-    .hero-content{ animation:none; opacity:1; transform:none; }
-    *{ scroll-behavior:auto !important; }
+    *{ animation-duration:0.01ms !important; scroll-behavior:auto !important; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <span class="nav-mark">Mika Solari</span>
+  <span class="nav-mark">Thunyakorn <span>Piamanboontee</span></span>
   <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#work">ผลงาน</a>
+    <a href="#about">เกี่ยวกับ</a>
+    <a href="#contact">ติดต่อ</a>
   </div>
 </nav>
 
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
-  <div class="hero-content">
-    <div class="hero-label">interaction &amp; 3D design</div>
-    <h1>Form, built<br>in <em>light.</em></h1>
-    <p>I design and build spatial interfaces — geometry, material and motion assembled in the browser, for products that ask to be looked at from more than one side.</p>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-top">
+    <div class="hero-id">Thunyakorn Piamanboontee <br><b>3D Product Artist</b></div>
+    <div class="hero-year">2026</div>
   </div>
-  <div class="scroll-cue">scroll</div>
+
+  <h1 class="hero-title">PORT<span class="thin">FOLIO</span></h1>
+
+  <div class="hero-bottom">
+    <a class="hero-cta" href="#work">
+      ดูผลงานทั้งหมด
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+    </a>
+    <div class="hero-replay" id="replay-btn" title="สุ่มมุมมองใหม่">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7M21 3v6h-6"/></svg>
+    </div>
+  </div>
 </section>
 
 <section class="about" id="about">
   <div class="about-text">
-    <p>I work at the seam between design and code — sketching in Blender, then rebuilding the result as light, responsive geometry in WebGL.</p>
-    <p>Six years across product studios and independent commissions, based between Bangkok and remote studios worldwide. I care about restraint: one idea, rendered precisely, outlasts a dozen effects.</p>
+    <p>ผมออกแบบและขึ้นโมเดล 3 มิติให้กับผลิตภัณฑ์ ตั้งแต่ของใช้ในชีวิตประจำวันไปจนถึงอุปกรณ์ไซไฟ เน้นพื้นผิวและแสงที่ให้ความรู้สึกพรีเมียม</p>
+    <p>ทำงานด้วย Blender เป็นหลัก ตั้งแต่บล็อกฟอร์มไปจนถึงจัดแสงเรนเดอร์ ก่อนนำไปพัฒนาต่อเป็นวัตถุที่เคลื่อนไหวได้จริงบนเว็บด้วย Three.js</p>
   </div>
   <div class="about-shape"><canvas id="about-canvas"></canvas></div>
 </section>
 
 <section id="work">
   <div class="section-head">
-    <h2>Selected work</h2>
-    <p>A short list of studies and commissions — each one a single geometric idea, carried through to production.</p>
+    <h2>ผลิตภัณฑ์ 3 มิติที่ผ่านมา</h2>
+    <p>ผลงานสร้างวัตถุและผลิตภัณฑ์ 3 มิติ คัดเลือกจากงานสตูดิโอและงานทดลองส่วนตัว</p>
   </div>
-  <div class="work-list">
 
-    <div class="work-row">
-      <div class="work-thumb"><canvas data-shape="torusKnot"></canvas></div>
-      <div class="work-info">
-        <h3>Woven Catalogue</h3>
-        <p>A product configurator built around a single continuous surface — knots and folds standing in for material choice.</p>
-      </div>
-      <div class="work-meta"><span>Commerce</span><span>2025</span></div>
+  <div class="bento">
+    <div class="bento-item b-gem">
+      <canvas data-shape="gem"></canvas>
+      <span class="b-chip">3D · Render</span>
+      <div class="b-label"><h3>อัญมณีหรู</h3><span>Product Study · 2026</span></div>
     </div>
-
-    <div class="work-row">
-      <div class="work-thumb"><canvas data-shape="dodecahedron"></canvas></div>
-      <div class="work-info">
-        <h3>Faceted Archive</h3>
-        <p>A spatial index for a photography archive — each facet a folder, rotated open with a glance.</p>
-      </div>
-      <div class="work-meta"><span>Editorial</span><span>2024</span></div>
+    <div class="bento-item b-bottle">
+      <canvas data-shape="bottle"></canvas>
+      <span class="b-chip">3D · Render</span>
+      <div class="b-label"><h3>ขวดน้ำหอม</h3><span>Packaging · 2025</span></div>
     </div>
-
-    <div class="work-row">
-      <div class="work-thumb"><canvas data-shape="octahedron"></canvas></div>
-      <div class="work-info">
-        <h3>Quiet Instrument</h3>
-        <p>A generative sound toy — geometry deforms with pitch, giving the ear something to watch.</p>
-      </div>
-      <div class="work-meta"><span>Installation</span><span>2023</span></div>
+    <div class="bento-item b-console">
+      <canvas data-shape="console"></canvas>
+      <span class="b-chip">3D</span>
+      <div class="b-label"><h3>คอมพิวเตอร์เรโทร</h3><span>Prop · 2025</span></div>
     </div>
-
-    <div class="work-row">
-      <div class="work-thumb"><canvas data-shape="icosahedron"></canvas></div>
-      <div class="work-info">
-        <h3>Terrain Study</h3>
-        <p>A procedural landscape renderer used to storyboard a climate-data documentary.</p>
-      </div>
-      <div class="work-meta"><span>Research</span><span>2022</span></div>
+    <div class="bento-item b-capsule">
+      <canvas data-shape="capsule"></canvas>
+      <span class="b-chip">3D · Render</span>
+      <div class="b-label"><h3>ยานสำรวจ</h3><span>Sci-fi · 2024</span></div>
     </div>
-
+    <div class="bento-item b-rover">
+      <canvas data-shape="rover"></canvas>
+      <span class="b-chip">3D · Render</span>
+      <div class="b-label"><h3>โรเวอร์สำรวจ</h3><span>Vehicle · 2024</span></div>
+    </div>
+    <div class="bento-item b-gold">
+      <canvas data-shape="gold"></canvas>
+      <span class="b-chip">3D · Render</span>
+      <div class="b-label"><h3>แท่งทองคำ</h3><span>Material Study · 2023</span></div>
+    </div>
   </div>
 </section>
 
 <section class="process">
   <div class="section-head" style="margin-bottom:0;">
-    <h2>Working set</h2>
-    <p>The tools I return to, in no particular order.</p>
+    <h2>เครื่องมือที่ใช้</h2>
+    <p>ซอฟต์แวร์และเทคนิคที่ใช้ประจำในงานผลิตภัณฑ์ 3 มิติ</p>
   </div>
   <ul class="process-list">
-    <li>Three.js</li><li>GLSL</li><li>Blender</li><li>React</li><li>WebGPU</li><li>Figma</li><li>TouchDesigner</li><li>Rust</li>
+    <li>Blender</li><li>Three.js</li><li>WebGL</li><li>Substance Painter</li><li>Cinema 4D</li><li>Figma</li>
   </ul>
 </section>
 
 <section class="contact" id="contact">
-  <div class="section-label">get in touch</div>
-  <h2>Working on something spatial? Let's talk.</h2>
-  <a class="contact-link" href="mailto:hello@mikasolari.studio">hello@mikasolari.studio</a>
+  <div class="section-label">ติดต่องาน</div>
+  <h2>สนใจงานออกแบบผลิตภัณฑ์ 3 มิติ ทักมาคุยกันได้เลย</h2>
+  <a class="contact-link" href="mailto:hello@thunyakorn.studio">hello@thunyakorn.studio</a>
   <div class="contact-socials">
     <a href="#">Instagram</a>
-    <a href="#">Are.na</a>
-    <a href="#">GitHub</a>
+    <a href="#">Behance</a>
+    <a href="#">ArtStation</a>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Mika Solari</span>
-  <span>Built with Three.js</span>
+  <span>© 2026 Thunyakorn Piamanboontee</span>
+  <span>สร้างด้วย Three.js</span>
 </footer>
 
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <script>
 (function(){
-  const accent = 0xC89B4A;
-  const accentDim = 0x6E5A30;
+  const GOLD = 0xE8B84B;
+  const GOLD_DIM = 0x7A6329;
   const scenes = [];
 
-  function makeRenderer(canvas, alpha){
+  function renderer(canvas){
     const r = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
     r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     return r;
   }
 
-  function wireMesh(geo, color){
-    const group = new THREE.Group();
-    const solid = new THREE.Mesh(
-      geo,
-      new THREE.MeshStandardMaterial({ color:0x10141B, metalness:0.2, roughness:0.6, transparent:true, opacity:0.55 })
-    );
-    const wire = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geo),
-      new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.9 })
-    );
-    group.add(solid, wire);
-    return group;
+  function facetMat(opacity){
+    return new THREE.MeshStandardMaterial({
+      color:0x0A0906, flatShading:true, metalness:0.35, roughness:0.3,
+      transparent:true, opacity: opacity!==undefined?opacity:0.9,
+      emissive:0x1C1508, emissiveIntensity:0.35
+    });
+  }
+  function edgeMat(color, opacity){
+    return new THREE.LineBasicMaterial({ color, transparent:true, opacity: opacity!==undefined?opacity:0.95 });
+  }
+  function facetMesh(geo, color, opacity){
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(geo, facetMat(opacity)));
+    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat(color)));
+    return g;
   }
 
-  /* ---------------- hero scene ---------------- */
+  /* ---------------- hero: centerpiece gem in a soft studio void ---------------- */
   function initHero(){
     const canvas = document.getElementById('hero-canvas');
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0, 7);
+    scene.fog = new THREE.FogExp2(0x060605, 0.05);
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.4, 8);
 
-    const renderer = makeRenderer(canvas);
+    const r = renderer(canvas);
     function size(){
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      r.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth/window.innerHeight;
       camera.updateProjectionMatrix();
     }
     size();
-
-    const key = new THREE.PointLight(0xC89B4A, 6, 30);
-    key.position.set(4, 3, 5);
-    const fill = new THREE.PointLight(0x2E4058, 4, 30);
-    fill.position.set(-5, -2, -3);
-    scene.add(key, fill, new THREE.AmbientLight(0x1a1f27, 1.2));
-
-    const geo = new THREE.IcosahedronGeometry(2.1, 1);
-    const mesh = wireMesh(geo, accent);
-    scene.add(mesh);
-
-    // scattered points for depth
-    const ptGeo = new THREE.BufferGeometry();
-    const count = 180;
-    const pos = new Float32Array(count*3);
-    for(let i=0;i<count;i++){
-      pos[i*3] = (Math.random()-0.5)*14;
-      pos[i*3+1] = (Math.random()-0.5)*14;
-      pos[i*3+2] = (Math.random()-0.5)*14 - 4;
-    }
-    ptGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-    const points = new THREE.Points(ptGeo, new THREE.PointsMaterial({ color:0x3A4250, size:0.02 }));
-    scene.add(points);
-
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e)=>{
-      mouseX = (e.clientX/window.innerWidth - 0.5);
-      mouseY = (e.clientY/window.innerHeight - 0.5);
-    });
-
     window.addEventListener('resize', size);
 
-    scenes.push(function(t){
-      mesh.rotation.y = t*0.00012 + mouseX*0.5;
-      mesh.rotation.x = t*0.00007 + mouseY*0.3;
-      points.rotation.y = t*0.00003;
-      renderer.render(scene, camera);
+    scene.add(new THREE.AmbientLight(0x14100a, 1.3));
+    const key = new THREE.PointLight(GOLD, 10, 30);
+    key.position.set(4, 4, 6);
+    const rim = new THREE.PointLight(0x2a3550, 6, 30);
+    rim.position.set(-5, -2, -4);
+    scene.add(key, rim);
+
+    const gemGeo = new THREE.IcosahedronGeometry(2.3, 1);
+    const gem = facetMesh(gemGeo, GOLD, 0.7);
+    scene.add(gem);
+
+    // orbiting fragments for depth and motion
+    const frags = new THREE.Group();
+    for(let i=0;i<10;i++){
+      const s = 0.12 + Math.random()*0.22;
+      const f = facetMesh(new THREE.OctahedronGeometry(s,0), i%3===0?GOLD:GOLD_DIM, 0.6);
+      const a = (i/10) * Math.PI*2;
+      const rad = 3.6 + Math.random()*1.6;
+      f.position.set(Math.cos(a)*rad, (Math.random()-0.5)*2.4, Math.sin(a)*rad - 1);
+      f.userData.a = a; f.userData.rad = rad; f.userData.speed = 0.00006 + Math.random()*0.00008;
+      frags.add(f);
+    }
+    scene.add(frags);
+
+    let mouseX=0, mouseY=0, targetSpeed=1;
+    window.addEventListener('mousemove', e=>{
+      mouseX = e.clientX/window.innerWidth - 0.5;
+      mouseY = e.clientY/window.innerHeight - 0.5;
+    });
+
+    const replayBtn = document.getElementById('replay-btn');
+    replayBtn.addEventListener('click', ()=>{
+      replayBtn.classList.add('spin');
+      targetSpeed = 6;
+      setTimeout(()=>{ replayBtn.classList.remove('spin'); targetSpeed = 1; }, 650);
+    });
+
+    scenes.push(function(t, dt){
+      gem.rotation.y = t*0.00018*targetSpeed + mouseX*0.6;
+      gem.rotation.x = t*0.00010*targetSpeed + mouseY*0.35;
+      frags.children.forEach(f=>{
+        f.userData.a += f.userData.speed*dt*targetSpeed;
+        f.position.x = Math.cos(f.userData.a)*f.userData.rad;
+        f.position.z = Math.sin(f.userData.a)*f.userData.rad - 1;
+        f.rotation.y += 0.0006*dt*targetSpeed;
+      });
+      r.render(scene, camera);
     });
   }
 
-  /* ---------------- small reusable scene for thumbnails ---------------- */
-  function initSmall(canvas, geo){
+  /* ---------------- reusable small scene ---------------- */
+  function initSmall(canvas, build){
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 20);
-    camera.position.set(0,0,4.6);
-    const renderer = makeRenderer(canvas);
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 30);
+    camera.position.set(2.4, 1.6, 4.4);
+    camera.lookAt(0,0,0);
+    const r = renderer(canvas);
 
     function size(){
-      const w = canvas.clientWidth || canvas.parentElement.clientWidth;
-      renderer.setSize(w, w, false);
-      camera.aspect = 1;
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(rect.width, 1), h = Math.max(rect.height, 1);
+      r.setSize(w, h, false);
+      camera.aspect = w/h;
       camera.updateProjectionMatrix();
     }
     size();
     window.addEventListener('resize', size);
 
-    scene.add(new THREE.AmbientLight(0x222831,1.4));
-    const light = new THREE.PointLight(accent, 5, 20);
-    light.position.set(3,3,4);
+    scene.add(new THREE.AmbientLight(0x1a140a, 1.5));
+    const light = new THREE.PointLight(GOLD, 7, 22);
+    light.position.set(3,4,4);
     scene.add(light);
+    const rim = new THREE.PointLight(0x3a4560, 3, 22);
+    rim.position.set(-3,-1,-3);
+    scene.add(rim);
 
-    const mesh = wireMesh(geo, accent);
-    scene.add(mesh);
+    const group = new THREE.Group();
+    build(group);
+    scene.add(group);
 
     scenes.push(function(t){
-      mesh.rotation.y = t*0.00025;
-      mesh.rotation.x = t*0.00016;
-      renderer.render(scene, camera);
+      group.rotation.y = t*0.00022;
+      r.render(scene, camera);
     });
   }
 
-  function geoFor(name){
-    switch(name){
-      case 'torusKnot': return new THREE.TorusKnotGeometry(1.1, 0.32, 90, 12);
-      case 'dodecahedron': return new THREE.DodecahedronGeometry(1.3, 0);
-      case 'octahedron': return new THREE.OctahedronGeometry(1.5, 0);
-      case 'icosahedron': return new THREE.IcosahedronGeometry(1.4, 0);
-      default: return new THREE.BoxGeometry(1.6,1.6,1.6);
-    }
+  function addPart(group, geo, color, opacity, pos, rot, scale){
+    const m = facetMesh(geo, color, opacity);
+    if(pos) m.position.set(pos[0],pos[1],pos[2]);
+    if(rot) m.rotation.set(rot[0],rot[1],rot[2]);
+    if(scale) m.scale.set(scale[0],scale[1],scale[2]);
+    group.add(m);
+    return m;
   }
+
+  const builders = {
+    gem: (g)=>{ addPart(g, new THREE.IcosahedronGeometry(1.5,0), GOLD, 0.85); },
+
+    bottle: (g)=>{
+      addPart(g, new THREE.CylinderGeometry(0.85,1.0,1.9,6), GOLD, 0.85, [0,-0.3,0]);
+      addPart(g, new THREE.CylinderGeometry(0.32,0.5,0.7,6), GOLD_DIM, 0.85, [0,1.0,0]);
+      addPart(g, new THREE.SphereGeometry(0.36,6,4), GOLD, 0.9, [0,1.55,0]);
+    },
+
+    console: (g)=>{
+      addPart(g, new THREE.BoxGeometry(2.0,1.5,1.5), GOLD_DIM, 0.85, [0,0.2,0]);
+      addPart(g, new THREE.BoxGeometry(1.5,1.0,0.15), GOLD, 0.9, [0,0.35,0.78]);
+      addPart(g, new THREE.BoxGeometry(1.9,0.15,1.3), GOLD_DIM, 0.85, [0,-0.62,0.1], null, null);
+    },
+
+    capsule: (g)=>{
+      addPart(g, new THREE.ConeGeometry(0.55,1.6,6), GOLD, 0.85, [0,0,0], [0,0,Math.PI/2]);
+      addPart(g, new THREE.CylinderGeometry(0.55,0.55,0.9,6), GOLD_DIM, 0.85, [0.7,0,0], [0,0,Math.PI/2]);
+      addPart(g, new THREE.ConeGeometry(0.55,0.9,6), GOLD, 0.85, [1.55,0,0], [0,0,-Math.PI/2]);
+    },
+
+    rover: (g)=>{
+      addPart(g, new THREE.BoxGeometry(2.2,0.8,1.3), GOLD_DIM, 0.85, [0,0.35,0]);
+      addPart(g, new THREE.BoxGeometry(1.0,0.5,1.0), GOLD, 0.9, [0,0.95,0]);
+      const wheelGeo = new THREE.TorusGeometry(0.42,0.2,5,7);
+      [[-0.9,0,0.75],[0.9,0,0.75],[-0.9,0,-0.75],[0.9,0,-0.75]].forEach(p=>{
+        addPart(g, wheelGeo, GOLD, 0.85, p, [Math.PI/2,0,0]);
+      });
+    },
+
+    gold: (g)=>{
+      const barGeo = new THREE.BoxGeometry(1.5,0.55,0.85);
+      const positions = [[-0.8,0.3,0],[0.8,0.3,0.05],[0,0.3,-0.85],[-0.4,-0.3,-0.4],[0.6,-0.3,-0.4]];
+      positions.forEach((p,i)=> addPart(g, barGeo, i%2===0?GOLD:GOLD_DIM, 0.9, p, [0,i*0.15,0]));
+    }
+  };
 
   window.addEventListener('DOMContentLoaded', ()=>{
     initHero();
-    initSmall(document.getElementById('about-canvas'), new THREE.TorusKnotGeometry(0.95,0.28,110,14));
+    initSmall(document.getElementById('about-canvas'), (g)=> addPart(g, new THREE.DodecahedronGeometry(1.1,0), GOLD, 0.85));
     document.querySelectorAll('[data-shape]').forEach(c=>{
-      initSmall(c, geoFor(c.dataset.shape));
+      const fn = builders[c.dataset.shape];
+      if(fn) initSmall(c, fn);
     });
 
+    let lastT = performance.now();
     function loop(t){
-      scenes.forEach(fn => fn(t));
+      const dt = t - lastT;
+      lastT = t;
+      scenes.forEach(fn => fn(t, dt));
       requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
